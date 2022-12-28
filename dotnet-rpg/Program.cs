@@ -1,8 +1,9 @@
 global using dotnet_rpg.models;
 using dotnet_rpg;
+using dotnet_rpg.Data;
 using dotnet_rpg.Dto.Character;
 using dotnet_rpg.Services.CharacterServices;
-
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICharacterService , CharacterService>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+builder.Services.AddDbContext<CharacterDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
