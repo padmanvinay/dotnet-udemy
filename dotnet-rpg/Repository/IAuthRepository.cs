@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace dotnet_rpg.Data
+namespace dotnet_rpg.Repository
 {
     public interface IAuthRepository
     {
