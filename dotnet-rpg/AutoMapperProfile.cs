@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using dotnet_rpg.Dto.Character;
+using dotnet_rpg.models;
 
 namespace dotnet_rpg
 {

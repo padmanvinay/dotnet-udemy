@@ -7,11 +7,13 @@ using dotnet_rpg.Data;
 using dotnet_rpg.Dto.Character;
 using dotnet_rpg.models;
 using dotnet_rpg.Services.CharacterServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace dotnet_rpg.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
