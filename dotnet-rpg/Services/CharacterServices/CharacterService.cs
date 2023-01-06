@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using AutoMapper;
@@ -17,12 +18,17 @@ namespace dotnet_rpg.Services.CharacterServices
         private static List<Character> characters = new List<Character> { };
         private readonly IMapper mapper;
         private readonly CharacterDbContext context;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public CharacterService(IMapper mapper, CharacterDbContext context)
+        public CharacterService(IMapper mapper, CharacterDbContext context , IHttpContextAccessor httpContextAccessor)
         {
             this.mapper = mapper;
             this.context = context;
+            this.httpContextAccessor = httpContextAccessor;
         }
+        
+        private int GetUserId() => int.Parse(httpContextAccessor.HttpContext.User.
+            FindFirstValue(ClaimTypes.NameIdentifier));
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
@@ -57,7 +63,9 @@ namespace dotnet_rpg.Services.CharacterServices
         public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacter()
         {
             var response = new ServiceResponse<List<GetCharacterDto>>();
-            var dbCharacters = await context.Characters.ToListAsync();
+            var dbCharacters = await context.Characters
+                .Where(c => c.User.Id == GetUserId())
+                .ToListAsync();
             response.Data = dbCharacters.Select(c =>
                 mapper.Map<GetCharacterDto>(c)).ToList();
             return response;
