@@ -20,7 +20,7 @@ namespace dotnet_rpg.Controllers
         {
             this.authRepository = authRepository;
         }
-        
+
         [HttpPost("register")]
         public async Task<ActionResult<ServiceResponse<int>>> Register(UserRegisterDto request)
         {
@@ -37,7 +37,7 @@ namespace dotnet_rpg.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<ServiceResponse<string>>> Login(UserRegisterDto request)
         {
-            var response = await authRepository.Login(request.Username , request.Password);
+            var response = await authRepository.Login(request.Username, request.Password);
             if (!response.Success)
             {
                 return BadRequest(response);

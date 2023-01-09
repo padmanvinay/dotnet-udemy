@@ -19,7 +19,7 @@ namespace dotnet_rpg.Controllers
     [Route("api/[controller]")]
     public class CharacterController : ControllerBase
     {
-        private ICharacterService characterService {get; set;}
+        private ICharacterService characterService { get; set; }
 
         public CharacterController(ICharacterService characterService)
         {
@@ -29,7 +29,7 @@ namespace dotnet_rpg.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get()
         {
-            int userId = int.Parse(User.Claims.FirstOrDefault( c => c.Type == ClaimTypes.NameIdentifier).Value);
+            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             return Ok(await characterService.GetAllCharacter());
         }
 

@@ -20,13 +20,13 @@ namespace dotnet_rpg.Services.CharacterServices
         private readonly CharacterDbContext context;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public CharacterService(IMapper mapper, CharacterDbContext context , IHttpContextAccessor httpContextAccessor)
+        public CharacterService(IMapper mapper, CharacterDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             this.mapper = mapper;
             this.context = context;
             this.httpContextAccessor = httpContextAccessor;
         }
-        
+
         private int GetUserId() => int.Parse(httpContextAccessor.HttpContext.User.
             FindFirstValue(ClaimTypes.NameIdentifier));
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
